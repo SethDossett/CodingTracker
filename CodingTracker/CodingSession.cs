@@ -15,5 +15,23 @@
             duration = this.duration;
         }
 
+        public static void StartTimer()
+        {
+            Console.WriteLine("\n\nCoding Session Has Begun.\n\n");
+            DateTime now = DateTime.Now;
+            if (DateTime.TryParse(now.ToString(), out now))
+            {
+                Console.WriteLine(now.ToString("MM-dd-yy HH:mm:ss"));
+            }
+            else
+            {
+                Console.Error.WriteLine("DateTime UnParsable.");
+            }
+        }
+        public static void EndTimer()
+        {
+
+        }
+
     }
 }

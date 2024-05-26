@@ -21,10 +21,10 @@ public class CodingController
             Console.WriteLine("\n\nMAIN MENU");
             Console.WriteLine("\nWhat would you like to do?");
             Console.WriteLine("\nType 0 to Close Application.");
-            Console.WriteLine("Type 1 to View All Records.");
-            Console.WriteLine("Type 2 to Insert Record.");
-            Console.WriteLine("Type 3 to Delete Record.");
-            Console.WriteLine("Type 4 to Update Record.");
+            Console.WriteLine("Type 1 to View Previous Sessions.");
+            Console.WriteLine("Type 2 to Start New Session.");
+            Console.WriteLine("Type 3 to Delete Session.");
+            Console.WriteLine("Type 4 to Update Session.");
             Console.WriteLine("------------------------------------------\n");
 
             //Read players input
@@ -76,6 +76,8 @@ public class CodingController
     private static void CreateRecord()
     {
         Console.Clear();
+        CodingSession.StartTimer();
+
 
         //Create connection table
 
@@ -87,8 +89,9 @@ public class CodingController
 
 
 
-        CodingSession record = new CodingSession(id, startTime, endTime, duration);
-        List<CodingSession> sessions = new List<CodingSession>();
+        //CodingSession record = new CodingSession(id, startTime, endTime, duration);
+        //List<CodingSession> sessions = new List<CodingSession>();
+
     }
 
     private static void ViewRecords()
