@@ -1,10 +1,26 @@
-﻿namespace CodingTracker;
+﻿using Microsoft.Data.Sqlite;
+
+namespace CodingTracker;
 
 public class CodingController
 {
+    static string connectionString = @"Data Source=habit-Tracker.db";
+
     private static void Main(string[] args)
-    {
-        Console.WriteLine("Pickles");
+    {   //Initialize Table
+        using (var connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+            var tableCmd = connection.CreateCommand();
+            tableCmd.CommandText = @"CREATE TABLE IF NOT EXISTS coding_session (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                StartTime TEXT,
+                EndTime TEXT,
+                Duration TEXT
+                )";
+            tableCmd.ExecuteNonQuery();
+            connection.Close();
+        }
 
         MainMenu();
 
@@ -76,15 +92,20 @@ public class CodingController
     private static void CreateRecord()
     {
         Console.Clear();
-        CodingSession.StartTimer();
+        //CodingSession.StartTimer();
+
+        CodingSession session = new CodingSession();
 
 
-        //Create connection table
+        //Create New Table Entry
+        using (var connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+            var tableCmd = connection.CreateCommand();
+            tableCmd.CommandText = $"INSERT INTO coding_session(startTime, endTime, duration) VALUES('{session.startTime}', '{session.endTime}', '{session.duration}')";
+            connection.Close();
+        }
 
-        string id = "";
-        string startTime = GetNumberInput("\n\nPlease insert your start time: (Format: dd - mm - yy).type 0 to return to main menu.\n\n");
-        string endTime;
-        DateTime duration;
 
 
 

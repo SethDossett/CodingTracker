@@ -7,12 +7,9 @@
         public DateTime endTime;
         public DateTime duration;
 
-        public CodingSession(string id, DateTime startTime, DateTime endTime, DateTime duration)
+        public CodingSession()
         {
-            id = this.Id;
-            startTime = this.startTime;
-            endTime = this.endTime;
-            duration = this.duration;
+            StartTimer();
         }
 
         public static void StartTimer()
@@ -54,7 +51,7 @@
             TimeSpan duration = endTime.Subtract(startTime);
             Console.WriteLine(ConvertTimeSpanToString(duration));
 
-
+            EndSession();
         }
 
         static string ParseTime()
@@ -93,7 +90,7 @@
         {   //Places an S if the quantity is > than 1 to the string.
             return number > 1 ? "s" : string.Empty;
         }
-        public static void EndTimer()
+        public static void EndSession()
         {
 
         }
