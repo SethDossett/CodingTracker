@@ -4,9 +4,9 @@ namespace CodingTracker;
 
 public class CodingController
 {
-    static string connectionString = @"Data Source=habit-Tracker.db";
+    static string connectionString = @"Data Source=coding-Tracker.db";
 
-    private static void Main(string[] args)
+    static void Main(string[] args)
     {   //Initialize Table
         using (var connection = new SqliteConnection(connectionString))
         {
@@ -18,6 +18,7 @@ public class CodingController
                 EndTime TEXT,
                 Duration TEXT
                 )";
+
             tableCmd.ExecuteNonQuery();
             connection.Close();
         }
@@ -38,9 +39,10 @@ public class CodingController
             Console.WriteLine("\nWhat would you like to do?");
             Console.WriteLine("\nType 0 to Close Application.");
             Console.WriteLine("Type 1 to View Previous Sessions.");
-            Console.WriteLine("Type 2 to Start New Session.");
-            Console.WriteLine("Type 3 to Delete Session.");
-            Console.WriteLine("Type 4 to Update Session.");
+            Console.WriteLine("Type 2 to Start New Live Session.");
+            Console.WriteLine("Type 3 to Log Session.");
+            Console.WriteLine("Type 4 to Delete Session.");
+            Console.WriteLine("Type 5 to Update Session.");
             Console.WriteLine("------------------------------------------\n");
 
             //Read players input
@@ -58,17 +60,20 @@ public class CodingController
                     ViewRecords();
                     break;
                 case "2":
-                    CreateRecord();
+                    LogLiveSession();
                     break;
                 case "3":
-                    DeleteRecord();
+                    LogSession();
                     break;
                 case "4":
+                    DeleteRecord();
+                    break;
+                case "5":
                     UpdateRecord();
                     break;
                 default:
                     Console.Clear();
-                    Console.WriteLine("\nInvalid Command. Please type a number from 0 to 4.\n");
+                    Console.WriteLine("\nInvalid Command. Please type a number from 0 to 5.\n");
                     break;
 
 
@@ -76,6 +81,19 @@ public class CodingController
         }
 
 
+
+    }
+
+    private static void LogSession()
+    {
+        Console.Clear();
+
+        string startTime = Console.ReadLine();
+        string endTime = Console.ReadLine();
+
+        CodingSession session = new CodingSession(startTime, endTime);
+
+        CreateRecord(session);
 
     }
 
@@ -89,12 +107,20 @@ public class CodingController
         throw new NotImplementedException();
     }
 
-    private static void CreateRecord()
+    private static void LogLiveSession()
     {
         Console.Clear();
         //CodingSession.StartTimer();
 
         CodingSession session = new CodingSession();
+
+        CreateRecord(session);
+
+    }
+
+
+    private static void CreateRecord(CodingSession session)
+    {
 
 
         //Create New Table Entry
@@ -102,7 +128,7 @@ public class CodingController
         {
             connection.Open();
             var tableCmd = connection.CreateCommand();
-            tableCmd.CommandText = $"INSERT INTO coding_session(startTime, endTime, duration) VALUES('{session.startTime}', '{session.endTime}', '{session.duration}')";
+            tableCmd.CommandText = $"INSERT INTO coding_session(startTime, endTime, duration) VALUES('{session.StartTime}', '{session.EndTime}', '{session.Duration}')";
             connection.Close();
         }
 

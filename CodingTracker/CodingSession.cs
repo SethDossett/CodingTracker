@@ -2,14 +2,20 @@
 {
     internal class CodingSession
     {
-        public string Id = "";
-        public DateTime startTime;
-        public DateTime endTime;
-        public DateTime duration;
+        public string Id { get; set; } = "";
+        public string StartTime { get; set; } = "";
+        public string EndTime { get; set; } = "";
+        public string Duration { get; set; } = "";
 
         public CodingSession()
         {
             StartTimer();
+        }
+
+        public CodingSession(string startTime, string endTime)
+        {
+            this.StartTime = startTime;
+            this.EndTime = endTime;
         }
 
         public static void StartTimer()
@@ -51,6 +57,7 @@
             TimeSpan duration = endTime.Subtract(startTime);
             Console.WriteLine(ConvertTimeSpanToString(duration));
 
+            CodingSession session = new CodingSession(startTime.ToString("dd-MM-yyyy"), endTime.ToString("dd-MM-yyyy"));
             EndSession();
         }
 
@@ -90,6 +97,7 @@
         {   //Places an S if the quantity is > than 1 to the string.
             return number > 1 ? "s" : string.Empty;
         }
+
         public static void EndSession()
         {
 
